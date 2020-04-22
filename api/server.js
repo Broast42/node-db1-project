@@ -77,7 +77,8 @@ server.put("/accounts/:id", async (req, res, next) =>{
 //Delete an account
 server.delete("/accounts/:id", async (req, res, next) =>{
     try{
-
+        await db("accounts").where("id", req.params.id).del()
+        res.status(204).end()
     } catch (err) {
         next(err)
     }
