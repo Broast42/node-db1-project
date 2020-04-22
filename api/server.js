@@ -22,7 +22,8 @@ server.get("/", async (req, res, next) => {
 //get all accounts
 server.get("/accounts", async (req, res, next) =>{
     try{
-
+        const accounts = await db.select("*").from("accounts")
+        res.status(200).json(accounts)
     } catch (err) {
         next(err)
     }
