@@ -57,8 +57,17 @@ server.post("/accounts", async (req, res, next) =>{
 })
 
 //Update an account
-server.put("/accounts", async (req, res, next) =>{
+server.put("/accounts/:id", async (req, res, next) =>{
     try{
+        const payload = {
+            name: req.body.name,
+            budget: req.body.budget,
+        }
+
+        await db("accounts").where("id", req.params.id).update(payload)
+        const result = await db("accounts").where("id", req.params.id).first()
+
+        res.json(result)
 
     } catch (err) {
         next(err)
@@ -66,7 +75,7 @@ server.put("/accounts", async (req, res, next) =>{
 })
 
 //Delete an account
-server.delete("/accounts", async (req, res, next) =>{
+server.delete("/accounts/:id", async (req, res, next) =>{
     try{
 
     } catch (err) {
