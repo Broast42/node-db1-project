@@ -42,6 +42,14 @@ server.get("/accounts/:id", async (req, res, next) =>{
 //Add an account
 server.post("/accounts", async (req, res, next) =>{
     try{
+        const payload = {
+            name: req.body.name,
+            budget: req.body.budget,
+        }
+        const [id] = await db("accounts").insert(payload)
+        const result = await db("accounts").where("id",id).first()
+
+        res.json(result)
 
     } catch (err) {
         next(err)
