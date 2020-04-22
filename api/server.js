@@ -32,7 +32,8 @@ server.get("/accounts", async (req, res, next) =>{
 //get account by id
 server.get("/accounts/:id", async (req, res, next) =>{
     try{
-
+        const account = await db("accounts").select("*").where("id", req.params.id).first()
+        res.json(account)
     } catch (err) {
         next(err)
     }
