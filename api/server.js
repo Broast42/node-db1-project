@@ -20,13 +20,26 @@ server.get("/", async (req, res, next) => {
 //CRUD Routes for accounts
 
 //get all accounts
+// server.get("/accounts", async (req, res, next) =>{
+//     try{
+//         const accounts = await db.select("*").from("accounts")
+//         res.status(200).json(accounts)
+//     } catch (err) {
+//         next(err)
+//     }
+// })
+
+//get all accounts with query options
+
 server.get("/accounts", async (req, res, next) =>{
-    try{
-        const accounts = await db.select("*").from("accounts")
+    
+    try{   
+        const accounts = await db("accounts").select("*").limit(req.query.limit).orderBy(req.query.sortby || "id", req.query.sortdir)
         res.status(200).json(accounts)
     } catch (err) {
         next(err)
     }
+    
 })
 
 //get account by id
